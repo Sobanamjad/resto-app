@@ -2,20 +2,21 @@
 import { useRouter } from "next/navigation"
 import { useState } from "react"
 
-const RestaruntLogin = () => {
+const RestaurantLogin = () => {
 
-    const [email, setEmail] = useState()
-    const [password, setPassword] = useState()
-    const [error, setError] = useState(false)
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [error, setError] = useState(false);
     const router = useRouter()
 
     const handleLogin = async () => {
         if(!email || !password){
             setError(true)
-            return false
+            return
         }else {
             setError(false)
         }
+
         const response = await fetch('http://localhost:3000/api/restaurant',{
             method: 'POST',
             headers: {
@@ -23,44 +24,52 @@ const RestaruntLogin = () => {
               },
             body:JSON.stringify({email,password, login:true})
         })
+
         const data = await response.json()
+
         if(data.success){
             const {result} = data
             delete result.password
             localStorage.setItem('restaurantuser', JSON.stringify(result))
             router.replace('/restaurant/dashboard')
         } else{
-            alert('login failed')
+            setError(true)
+            alert('Login failed! Email ya password galat hai')
         }
 
     }
+
     return (
         <>
-        <h3>
-        Login page
-        </h3>
+        <h3>Login Page</h3>
+
         <div className="input-wrapper">
-            <input type="text" placeholder="Enter Email" className="input-field" 
-            value={email} onChange={(e)=>setEmail(e.target.value)}/>
-            {
-                error && !email && <span className="input-error">Enter Valid Passwrod</span>
-            }
+            <input 
+                type="text" 
+                placeholder="Enter Email" 
+                className="input-field" 
+                value={email} 
+                onChange={(e)=>setEmail(e.target.value)}
+            />
+            {error && !email && <span className="input-error">Email daal do</span>}
         </div>
+
         <div className="input-wrapper">
-            <input type="password" placeholder="Enter password" className="input-field"
-            value={password} onChange={(e)=>setPassword(e.target.value)} />
-            {
-                error && !password && <span className="input-error">Enter Valid Password</span>
-            }
+            <input 
+                type="password" 
+                placeholder="Enter Password" 
+                className="input-field"
+                value={password} 
+                onChange={(e)=>setPassword(e.target.value)} 
+            />
+            {error && !password && <span className="input-error">Password daal do</span>}
         </div>
+
         <div className="input-wrapper"> 
             <button className="button" onClick={handleLogin}>Login</button>
         </div>
         </>
-
-
     )
-
 }
 
-export default RestaruntLogin
+export default RestaurantLogin
