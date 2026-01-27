@@ -12,7 +12,7 @@ const EditFoodItem = ({ params }: EditFoodItemProps) => {
   const resolvedParams = use(params)
   const id = resolvedParams.id
 
-  console.log("Food ID:", id)  // ← check karna console mein id aa rahi hai ya nahi
+  console.log("Food ID:", id) 
 
   const [name, setName] = useState('')
   const [price, setPrice] = useState('')

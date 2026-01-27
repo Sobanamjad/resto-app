@@ -16,14 +16,13 @@ export async function GET(request, { params }) {
     return NextResponse.json({ success: false, message: 'Invalid ID' }, { status: 400 });
   }
 
-  // Pehle restaurant ke foods ki list try karo
   const foods = await prisma.foods.findMany({
     where: {
       restaurant_id: parsedId
     }
   });
 
-  // Agar foods mili hain (kam se kam 1 bhi), to list return kar do
+  
   if (foods.length > 0) {
     return NextResponse.json({
       success: true,
@@ -31,7 +30,7 @@ export async function GET(request, { params }) {
     });
   }
 
-  // Agar list empty hai → shayad yeh single food id hai (edit ke liye)
+
   const singleFood = await prisma.foods.findUnique({
     where: {
       id: parsedId
@@ -45,7 +44,7 @@ export async function GET(request, { params }) {
     });
   }
 
-  // Agar kuch bhi nahi mila
+
   return NextResponse.json({
     success: false,
     message: 'Food not found'
@@ -58,7 +57,7 @@ export async function DELETE(request, context) {
 
   const food_id = Number(params.id)
 
-  // Agar id missing ya invalid hai
+
   if (!params.id || isNaN(food_id)) {
       return NextResponse.json({
           success: false,

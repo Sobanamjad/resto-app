@@ -34,7 +34,7 @@ const RestaurantLogin = () => {
             router.replace('/restaurant/dashboard')
         } else{
             setError(true)
-            alert('Login failed! Email ya password galat hai')
+            alert('Login failed! Email or password wrong')
         }
 
     }

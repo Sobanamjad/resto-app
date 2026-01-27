@@ -3,65 +3,64 @@ import Link from 'next/link'
 import { useRouter, usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
-// Optional: type define kar do (TypeScript error khatam ho jayega)
 interface RestaurantUser {
-    id: number;         // database mein Int hai
-    name?: string;      // optional (String?)
-    email: string;      // required (String @unique)
-    city?: string;      // optional
-    address?: string;   // optional
-    contact?: string;
+    id: number         
+    name?: string      
+    email: string      
+    city?: string  
+    address?: string
+    contact?: string
 }
 
 const RestaurantHeader = () => {
-    // State ko type do taake null allowed ho
-    const [details, setDetails] = useState<RestaurantUser | null>(null);
+   
+    const [details, setDetails] = useState<RestaurantUser | null>(null)
 
-    const router = useRouter();
-    const pathname = usePathname();
+    const router = useRouter()
+    const pathname = usePathname()
 
     useEffect(() => {
-        // Ek alag function banao
+        
         const syncUserData = () => {
-            const storedData = localStorage.getItem('restaurantuser');
+            const storedData = localStorage.getItem('restaurantuser')
 
             if (!storedData) {
-                setDetails(null);  // ← ab yeh safe hai
+                setDetails(null)  
 
-                // Dashboard pe hai to login pe bhej do
+               
                 if (pathname === '/restaurant/dashboard') {
-                    router.replace('/restaurant');
+                    router.replace('/restaurant')
                 }
             } else {
                 // Safe parse
                 if (typeof storedData === 'string' && storedData.trim() !== '') {
-                    const parsed = JSON.parse(storedData);
-                    setDetails(parsed);
+                    const parsed = JSON.parse(storedData)
+                    setDetails(parsed)
 
-                    // Login page pe hai to dashboard pe bhej do
+                
                     if (pathname === '/restaurant') {
-                        router.replace('/restaurant/dashboard');
+                        router.replace('/restaurant/dashboard')
                     }
                 } else {
-                    setDetails(null);
-                    localStorage.removeItem('restaurantuser');
+                    setDetails(null)
+                    localStorage.removeItem('restaurantuser')
 
                     if (pathname === '/restaurant/dashboard') {
-                        router.replace('/restaurant');
+                        router.replace('/restaurant')
                     }
                 }
             }
-        };
+        }
 
-        // Effect ke andar sirf function call karo
-        syncUserData();
-    }, [pathname, router]);  // dependencies sahi rakho// ← dependencies daal do (important)
+       
+        syncUserData()
+    }, [pathname, router]) 
 
     const logout = () => {
-        localStorage.removeItem('restaurantuser');
-        setDetails(null);
-        router.replace('/restaurant');
-    };
+        localStorage.removeItem('restaurantuser')
+        setDetails(null)
+        router.replace('/restaurant')
+    }
 
     return (
         <div className='header-wrapper'>
@@ -80,7 +79,7 @@ const RestaurantHeader = () => {
                 {details && details.name ? (
                     <>
                         <li>
-                            {/* Profile link sahi karo – dashboard ya profile page pe */}
+                            
                             <Link href="/restaurant/dashboard">Profile</Link>
                         </li>
                         <li>
@@ -99,7 +98,7 @@ const RestaurantHeader = () => {
                 )}
             </ul>
         </div>
-    );
-};
+    )
+}
 
-export default RestaurantHeader;
+export default RestaurantHeader

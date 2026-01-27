@@ -1,3 +1,32 @@
+*:focus{
+    outline: none;
+}
+.header-wrapper{
+    display: flex;
+    justify-content: space-between;
+}
+
+.header-wrapper ul{
+    display: flex;
+}
+
+.header-wrapper ul li{
+    list-style-type: none;
+    padding: 5px;
+}
+
+.header-wrapper ul li a{
+    text-decoration: none;
+}
+
+.header-wrapper ul li button{
+    background-color: transparent;
+    border: none;
+    color: blueviolet;
+    font-size: 15px;
+    cursor: pointer;
+}
+
 .input-wrapper{
     margin: 10px;
 }
@@ -42,4 +71,87 @@ table, td, button{
 
 table img{
     width: 80px;
+}
+
+.main-page-banner{
+    background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ0cFleHkr83XTp-0AALLRqiAOs7nZxme-OVQ&s');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: rgb(0,0,0,0.4);
+    background-blend-mode: multiply;
+    padding: 30px;
+    height: 280px;
+    color: #fff;
+    text-align: center;
+}
+
+.main-page-banner .input-wrapper{
+    background-color: #fff;
+    padding: 5px;
+    border: 1px sloid #ccc;
+    border-radius: 4px;
+    margin: auto;
+    width: 60%;
+
+}
+
+.main-page-banner .select-input{
+    height: 40px;
+    border: none;
+    width: 25%;
+    padding-left: 15px;
+}
+
+.main-page-banner .search-input{
+    height: 40px;
+    border: none;
+    width: 65%;
+    border-left: 1px solid #cccc;
+    padding-left: 15px;
+}
+
+.location-list{
+    color: #000;
+    list-style: none;
+    text-align: left;
+    position: absolute;
+    background-color: #fff;
+    padding: 0;
+    margin: 0;
+    margin-left: -5px;
+    border: 1px solid #fff;
+}
+
+.location-list li{
+    width: 235px;
+    padding: 5px;
+    border-bottom: 1px solid #ccc;
+    cursor: pointer;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.footer-wrapper{
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    font-size: 15px;
+    background-color: white;
+    margin-bottom: 20px;
 }
