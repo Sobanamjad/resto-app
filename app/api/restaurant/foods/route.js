@@ -32,23 +32,3 @@ export async function POST(request) {
 
   return NextResponse.json({ result, success });
 }
-
-// export async function GET(request) {
-//   const { searchParams } = new URL(request.url);
-//   const restaurant_id = searchParams.get('restaurant_id');
-
-//   if (!restaurant_id) {
-//     return NextResponse.json(
-//       { success: false, message: 'Create Account First' },
-//       { status: 400 }
-//     );
-//   }
-
-//   const foods = await prisma.foods.findMany({
-//     where: {
-//       restaurant_id: Number(restaurant_id)
-//     }
-//   });
-
-//   return NextResponse.json({ success: true, result: foods });
-// }

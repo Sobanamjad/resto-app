@@ -1,6 +1,6 @@
 'use client'
 import { useRouter } from "next/navigation"
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 
 interface FoodItem {
     id: number
@@ -11,43 +11,48 @@ interface FoodItem {
     // agar restaurant_id bhi hai to yahan add kar sakte ho
 }
 const FoodItemList = () => {
-    const [foodItems, setFoodItems] = useState<FoodItem[]>([]);
+    const [foodItems, setFoodItems] = useState<FoodItem[]>([])
     const router = useRouter()
+
+    
+    const isDeletingRef = useRef(false)
 
 
     const LoadFoodItems = async () => {
         const restaurantData = localStorage.getItem('restaurantuser')
-
+    
         if (!restaurantData) {
             alert('Login First.')
-            return;
+            return
         }
-
+    
         const resto = JSON.parse(restaurantData)
         const restaurant_id = resto.id
-
+    
         if (!restaurant_id) {
             alert('Login again.')
-            return;
+            return
         }
-
+    
         const url = `http://localhost:3000/api/restaurant/foods/${restaurant_id}`
-
-        const response = await fetch(url);
-
+    
+        const response = await fetch(url)
+    
         if (!response.ok) {
-            const text = await response.text();
-            console.log('Backend Code Issue', response.status, text)
-            alert('Server Porblem :' + response.status)
-            return;
+            
+            if (response.status !== 404) {
+                alert('Server Problem: ' + response.status)
+            }
+            setFoodItems([])  
+            return
         }
-
+    
         const data = await response.json()
-
+    
         if (data.success) {
-            setFoodItems(data.result);
+            setFoodItems(data.result || [])
         } else {
-            alert('Food Items not loaded! ' + (data.message || 'Something Wrong'))
+            setFoodItems([])
         }
     }
 
@@ -55,35 +60,46 @@ const FoodItemList = () => {
         const fetchData = async () => {
             await LoadFoodItems()
         }
-        fetchData();
+        fetchData()
     }, [])
 
     const deleteFoodItem = async (id: number) => {
-        const restaurantData = localStorage.getItem('restaurantuser')
+        if (isDeletingRef.current) return
+        isDeletingRef.current = true
 
+        const restaurantData = localStorage.getItem('restaurantuser')
         if (!restaurantData) {
             alert('Login First.')
-            return;
+            isDeletingRef.current = false
+            return
         }
-
         const resto = JSON.parse(restaurantData)
         const restaurant_id = resto.id
+       
         if (!restaurant_id) {
             alert('Restaurant ID not found')
-            return;
+            isDeletingRef.current = false
+            return
         }
+
         const url = `http://localhost:3000/api/restaurant/foods/${id}`
         const response = await fetch(url, {
-            method: 'DELETE'
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token') || ''}`
+            }
         })
 
         const data = await response.json()
+
         if (data.success) {
             alert('Food item deleted successfully!')
-            LoadFoodItems()
+            await LoadFoodItems()
         } else {
-            alert('Delete failed: ' + (data.message || 'Unknown error'));
+            alert('Delete failed: ' + (data.message || 'Unknown error'))
         }
+
+        isDeletingRef.current = false
     }
 
     return (
@@ -103,14 +119,16 @@ const FoodItemList = () => {
                 <tbody>
                     {
                         foodItems && foodItems.map((item, key) => (
-                            <tr key={key}>
+                            <tr key={item.id}>
                                 <td>{key + 1}</td>
                                 <td>{item.name}</td>
                                 <td>{item.price}</td>
                                 <td>{item.description}</td>
                                 <td><img src={item.img_path} alt={item.name} /></td>
                                 <td><button onClick={() => { deleteFoodItem(item.id) }}>Delete</button>
-                                <button onClick={()=> router.push('dashboard/' + item.id)}>Edit</button></td>
+                                    <button onClick={() => router.push(`/restaurant/dashboard/${item.id}`)}>
+                                        Edit
+                                    </button></td>
                             </tr>
                         ))
                     }
