@@ -131,6 +131,39 @@ table img{
 
 }
 
+.restaurants-list-container{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.restaurant-wrapper{
+    width: 45%;
+    background-color: orange;
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid #aaa;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.restaurant-wrapper .header-wrapper, .restaurant-wrapper .address-wrapper{
+    padding-left: 15px;
+    display: flex;
+    justify-content: flex-start;
+
+}
+
+.restaurant-wrapper h5{
+    margin-left: 15px;
+}
+
+.restaurant-wrapper .address{
+    margin-left: 10px;
+}
+
 
 
 
