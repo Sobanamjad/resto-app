@@ -2,6 +2,7 @@
 import { useEffect, useState, useMemo } from "react";
 import CustomerHeader from "./_components/CustomerHeader"
 import RestaurantFooter from "./_components/RestaurantFooter";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
 
@@ -12,6 +13,7 @@ export default function Home() {
   const [restaurants, setRestaurants] = useState<any[]>([])
   const [searchQueries, setsearchQueries] = useState('')
   const [isLoading, setIsLoading] = useState(true)
+  const router = useRouter()
 
 
   
@@ -104,7 +106,9 @@ export default function Home() {
             : "No restaurants found"}</h3>
         ) : (
           filteredRestaurants.map((restaurant) => (
-            <div key={restaurant.id || restaurant._id || restaurant.name} className="restaurant-wrapper">
+            <div key={restaurant.id || restaurant._id || restaurant.name} className="restaurant-wrapper"
+              onClick={()=>router.push('explore/'+ restaurant.name)}
+            >
               <div className="heading-wrapper">
                 <h3>{restaurant.name}</h3>
                 <h5>Contact: {restaurant.contact}</h5>

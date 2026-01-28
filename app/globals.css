@@ -73,7 +73,7 @@ table img{
     width: 80px;
 }
 
-.main-page-banner{
+.main-page-banner, .restaurant-page-banner{
     background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ0cFleHkr83XTp-0AALLRqiAOs7nZxme-OVQ&s');
     background-size: cover;
     background-position: center;
@@ -162,6 +162,10 @@ table img{
 
 .restaurant-wrapper .address{
     margin-left: 10px;
+}
+
+.restaurant-page-banner h1{
+    font-size: 75px;
 }
 
 
