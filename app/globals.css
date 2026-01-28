@@ -168,6 +168,33 @@ table img{
     font-size: 75px;
 }
 
+.food-menu-heading{
+    font-size: 40px;
+}
+
+.food-item-wrapper{
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.food-item-wrapper, .food-list{
+    color: orange;
+    font-weight: bold;
+    border-bottom: 1px solid orange;
+    padding: 20px;
+    text-transform: capitalize;
+}
+
+.cart-button{
+    color: #fff;
+    border: none;
+    background-color: orange;
+    padding: 5px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+
 
 
 

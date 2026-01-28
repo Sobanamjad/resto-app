@@ -51,7 +51,7 @@ const RestaurantLogin = () => {
                 value={email} 
                 onChange={(e)=>setEmail(e.target.value)}
             />
-            {error && !email && <span className="input-error">Email daal do</span>}
+            {error && !email && <span className="input-error">Please Enter Email</span>}
         </div>
 
         <div className="input-wrapper">
@@ -62,7 +62,7 @@ const RestaurantLogin = () => {
                 value={password} 
                 onChange={(e)=>setPassword(e.target.value)} 
             />
-            {error && !password && <span className="input-error">Password daal do</span>}
+            {error && !password && <span className="input-error">Please Enter Password</span>}
         </div>
 
         <div className="input-wrapper"> 
